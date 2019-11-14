@@ -22,4 +22,10 @@ public class MainPageController {
     {
         return "redirect:/BooksList";
     }
+
+    @PostMapping("/addNewBook")
+    public String addNewBook()
+    {
+        return "redirect:/NewBook";
+    }
 }
