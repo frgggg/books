@@ -1,7 +1,10 @@
 package com.example.books.entitys;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "books_table", schema = "books_schema", catalog = "")
 public class Book {
@@ -30,38 +33,6 @@ public class Book {
     {
         this.name = name;
         this.publishYear = publishYear;
-        this.comment = comment;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    /*public void setId(Integer id) {
-        this.id = id;
-    }*/
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getPublishYear() {
-        return publishYear;
-    }
-
-    public void setPublishYear(Integer publishYear) {
-        this.publishYear = publishYear;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
         this.comment = comment;
     }
 }
