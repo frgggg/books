@@ -1,26 +1,37 @@
 package com.example.books.entitys;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "books_table", schema = "books_schema", catalog = "")
+@Table(name = "books_table")
 public class Book {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @Getter
+    @Setter
     @Column(name = "name")
     private String name;
+
+    @Getter
+    @Setter
     @Column(name = "publish_year")
     private Integer publishYear;
+
+    @Getter
+    @Setter
     @Column(name = "comment")
     private String comment;
 
-    public final String NULL_NAME = "null_name";
-    public final Integer NULL_PUBLISH_YEAR = 0;
-    public final String NULL_COMMENT = "null_comment";
+    public static final String NULL_NAME = "null_name";
+    public static final Integer NULL_PUBLISH_YEAR = 0;
+    public static final String NULL_COMMENT = "null_comment";
 
     public Book()
     {

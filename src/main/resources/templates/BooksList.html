@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Books list</title>
 </head>
 <body>
 <div>All exist books</div>
+
+<table>
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Publish Year</th>
+        <th>Comment</th>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}">0</td>
+        <td th:text="${book.name}">null name</td>
+        <td th:text="${book.publishYear}">2000</td>
+        <td th:text="${book.comment}">null comment</td>
+    </tr>
+</table>
+
 </body>
 </html>
