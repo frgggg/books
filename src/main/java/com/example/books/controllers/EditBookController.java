@@ -6,18 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class NewBookController {
+public class EditBookController {
 
     private BookServicePostgreImpl postgre;
-
-    private String tmpName = BookServicePostgreImpl.DEF_BOOK_PARAM;
-    private String tmpYear = BookServicePostgreImpl.DEF_BOOK_PARAM;
-    private String tmpComment = BookServicePostgreImpl.DEF_BOOK_PARAM;
 
     @Autowired
     public void setPostgre(BookServicePostgreImpl postgre)
@@ -25,57 +21,57 @@ public class NewBookController {
         this.postgre = postgre;
     }
 
-    @GetMapping("/NewBook")
-    public String newBookPage(Model model)
+    @GetMapping("/BooksList/{id}")
+    public String editBookPage(@PathVariable("id") Integer id, Model model)
     {
-        model.addAttribute("name", tmpName);
-        model.addAttribute("year", tmpYear);
-        model.addAttribute("comment", tmpComment);
-        return "NewBook";
+        Book book = postgre.getBookById(id);
+        if(book != null) {
+            model.addAttribute("name", book.getName());
+            model.addAttribute("year", book.getPublishYear().toString());
+            model.addAttribute("comment", book.getComment());
+            return "EditBook";
+        }
+        return "redirect:/BooksList";
     }
 
-    private void saveErrorBookParams(String name, String year, String comment)
-    {
-        tmpName = name;
-        tmpYear = year;
-        tmpComment = comment;
-    }
-
-    private void setDefBookParams()
-    {
-        tmpName = BookServicePostgreImpl.DEF_BOOK_PARAM;
-        tmpYear = BookServicePostgreImpl.DEF_BOOK_PARAM;
-        tmpComment = BookServicePostgreImpl.DEF_BOOK_PARAM;
-    }
-
-    @PostMapping("/NewBook")
-    public String addNewBook(
+    @PostMapping("/BooksList/{id}/update")
+    public String updateBook(
+            @PathVariable("id") Integer id,
             @RequestParam(value="name") String name,
             @RequestParam(value="year") String year,
             @RequestParam(value="comment") String comment
-    ) {
+    )
+    {
         if(
                 (name.equals(BookServicePostgreImpl.DEF_BOOK_PARAM)) ||
                 (year.equals(BookServicePostgreImpl.DEF_BOOK_PARAM)) ||
                 (comment.equals(BookServicePostgreImpl.DEF_BOOK_PARAM))
         )
         {
-            saveErrorBookParams(name, year, comment);
-            return "NewBook";
+            System.out.println(name);
+            System.out.println(year);
+            System.out.println(comment);
+            return "redirect:/BooksList/" + id;
         }
-
         Integer tmpYearInteger;
         try {
             tmpYearInteger = new Integer(year);
         }
         catch (NumberFormatException e)
         {
-            saveErrorBookParams(name, year, comment);
-            return "NewBook";
+            System.out.println("E!");
+            return "redirect:/BooksList/" + id;
         }
 
-        setDefBookParams();
-        postgre.saveBook(new Book(name, tmpYearInteger, comment));
+        postgre.updateBook(id, name, tmpYearInteger, comment);
         return "redirect:/BooksList";
     }
+
+    @PostMapping("/BooksList/{id}/delete")
+    public String deleteBook(@PathVariable("id") Integer id)
+    {
+        postgre.deleteBook(id);
+        return "redirect:/BooksList";
+    }
+
 }

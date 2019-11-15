@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit book</title>
+</head>
+<body>
+<div>Settings params of exist book</div>
+
+<input type="text" name="name" id="name" th:value="${name}" />
+<input type="text" name="year" id="year" th:value="${year}"/>
+<input type="text" name="comment" id="comment"  th:value="${comment}"/>
+
+<form action="#" th:action="@{/BooksList/{id}/update(id=${id})}" method="post">
+    <input type="submit" value="Update" />
+</form>
+
+<form action="#" th:action="@{/BooksList/{id}/delete(id=${id})}" method="post">
+    <input type="submit" value="Delete" />
+</form>
+
+</body>
+</html>

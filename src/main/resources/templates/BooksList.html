@@ -16,9 +16,11 @@
     </tr>
     <tr th:each="book : ${books}">
         <td th:text="${book.id}">0</td>
-        <td th:text="${book.name}">null name</td>
+        <td> <a th:href="@{/BooksList/{id}(id=${book.id})}" th:text="${book.name}"></a> </td>
+        <!-- <td th:text="${book.name}">null name</td> -->
         <td th:text="${book.publishYear}">2000</td>
         <td th:text="${book.comment}">null comment</td>
+
     </tr>
 </table>
 

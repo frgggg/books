@@ -10,6 +10,8 @@ import java.util.*;
 @Service
 public class BookServicePostgreImpl implements BookService {
 
+    public static final String DEF_BOOK_PARAM = "";
+
     private BookRepository repository;
 
     @Autowired
