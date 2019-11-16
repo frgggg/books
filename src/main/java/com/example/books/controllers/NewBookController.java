@@ -14,9 +14,9 @@ public class NewBookController {
 
     private BookServiceImpl bookService;
 
-    private String tmpName = BookServiceImpl.DEF_BOOK_PARAM;
-    private String tmpYear = BookServiceImpl.DEF_BOOK_PARAM;
-    private String tmpComment = BookServiceImpl.DEF_BOOK_PARAM;
+    private String tmpName = BookControllersUtil.DEF_BOOK_PARAM;
+    private String tmpYear = BookControllersUtil.DEF_BOOK_PARAM;
+    private String tmpComment = BookControllersUtil.DEF_BOOK_PARAM;
 
     @Autowired
     public void setBookService(BookServiceImpl bookService)
@@ -42,9 +42,9 @@ public class NewBookController {
 
     private void setDefBookParams()
     {
-        tmpName = BookServiceImpl.DEF_BOOK_PARAM;
-        tmpYear = BookServiceImpl.DEF_BOOK_PARAM;
-        tmpComment = BookServiceImpl.DEF_BOOK_PARAM;
+        tmpName = BookControllersUtil.DEF_BOOK_PARAM;
+        tmpYear = BookControllersUtil.DEF_BOOK_PARAM;
+        tmpComment = BookControllersUtil.DEF_BOOK_PARAM;
     }
 
     @PostMapping("/NewBook")
@@ -54,9 +54,9 @@ public class NewBookController {
             @RequestParam(value="comment") String comment
     ) {
         if(
-                (name.equals(BookServiceImpl.DEF_BOOK_PARAM)) ||
-                (year.equals(BookServiceImpl.DEF_BOOK_PARAM)) ||
-                (comment.equals(BookServiceImpl.DEF_BOOK_PARAM))
+                (name.equals(BookControllersUtil.DEF_BOOK_PARAM)) ||
+                (year.equals(BookControllersUtil.DEF_BOOK_PARAM)) ||
+                (comment.equals(BookControllersUtil.DEF_BOOK_PARAM))
         )
         {
             saveErrorBookParams(name, year, comment);

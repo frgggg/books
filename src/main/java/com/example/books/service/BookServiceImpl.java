@@ -9,9 +9,6 @@ import java.util.*;
 
 @Service
 public class BookServiceImpl implements BookService {
-
-    public static final String DEF_BOOK_PARAM = "";
-
     private BookRepository repository;
 
     @Autowired

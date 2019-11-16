@@ -5,10 +5,7 @@ import com.example.books.service.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class EditBookController {
@@ -34,7 +31,7 @@ public class EditBookController {
         return "redirect:/BooksList";
     }
 
-    @PostMapping("/BooksList/{id}/update")
+    @PostMapping(value = "/BooksList/{id}/update")
     public String updateBook(
             @PathVariable("id") Integer id,
             @RequestParam(value="name") String name,
@@ -43,9 +40,9 @@ public class EditBookController {
     )
     {
         if(
-                (name.equals(BookServiceImpl.DEF_BOOK_PARAM)) ||
-                (year.equals(BookServiceImpl.DEF_BOOK_PARAM)) ||
-                (comment.equals(BookServiceImpl.DEF_BOOK_PARAM))
+                (name.equals(BookControllersUtil.DEF_BOOK_PARAM)) ||
+                (year.equals(BookControllersUtil.DEF_BOOK_PARAM)) ||
+                (comment.equals(BookControllersUtil.DEF_BOOK_PARAM))
         )
         {
             System.out.println(name);
@@ -53,21 +50,21 @@ public class EditBookController {
             System.out.println(comment);
             return "redirect:/BooksList/" + id;
         }
-        Integer tmpYearInteger;
+        Integer yearInt;
         try {
-            tmpYearInteger = new Integer(year);
+            yearInt = new Integer(year);
         }
         catch (NumberFormatException e)
         {
-            System.out.println("E!");
+            System.out.println("Bad publish year!");
             return "redirect:/BooksList/" + id;
         }
 
-        bookService.updateBook(id, name, tmpYearInteger, comment);
+        bookService.updateBook(id, name, yearInt, comment);
         return "redirect:/BooksList";
     }
 
-    @PostMapping("/BooksList/{id}/delete")
+    @PostMapping(value = "/BooksList/{id}/delete")
     public String deleteBook(@PathVariable("id") Integer id)
     {
         bookService.deleteBook(id);
