@@ -1,7 +1,7 @@
 package com.example.books.controllers;
 
 import com.example.books.entitys.Book;
-import com.example.books.service.BookServicePostgreImpl;
+import com.example.books.service.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class EditBookController {
 
-    private BookServicePostgreImpl postgre;
+    private BookServiceImpl bookService;
 
     @Autowired
-    public void setPostgre(BookServicePostgreImpl postgre)
+    public void setBookService(BookServiceImpl bookService)
     {
-        this.postgre = postgre;
+        this.bookService = bookService;
     }
 
     @GetMapping("/BooksList/{id}")
     public String editBookPage(@PathVariable("id") Integer id, Model model)
     {
-        Book book = postgre.getBookById(id);
+        Book book = bookService.getBookById(id);
         if(book != null) {
             model.addAttribute("name", book.getName());
             model.addAttribute("year", book.getPublishYear().toString());
@@ -43,9 +43,9 @@ public class EditBookController {
     )
     {
         if(
-                (name.equals(BookServicePostgreImpl.DEF_BOOK_PARAM)) ||
-                (year.equals(BookServicePostgreImpl.DEF_BOOK_PARAM)) ||
-                (comment.equals(BookServicePostgreImpl.DEF_BOOK_PARAM))
+                (name.equals(BookServiceImpl.DEF_BOOK_PARAM)) ||
+                (year.equals(BookServiceImpl.DEF_BOOK_PARAM)) ||
+                (comment.equals(BookServiceImpl.DEF_BOOK_PARAM))
         )
         {
             System.out.println(name);
@@ -63,14 +63,14 @@ public class EditBookController {
             return "redirect:/BooksList/" + id;
         }
 
-        postgre.updateBook(id, name, tmpYearInteger, comment);
+        bookService.updateBook(id, name, tmpYearInteger, comment);
         return "redirect:/BooksList";
     }
 
     @PostMapping("/BooksList/{id}/delete")
     public String deleteBook(@PathVariable("id") Integer id)
     {
-        postgre.deleteBook(id);
+        bookService.deleteBook(id);
         return "redirect:/BooksList";
     }
 

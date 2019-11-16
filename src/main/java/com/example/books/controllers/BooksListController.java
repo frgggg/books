@@ -1,6 +1,6 @@
 package com.example.books.controllers;
 
-import com.example.books.service.BookServicePostgreImpl;
+import com.example.books.service.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class BooksListController {
 
-    private BookServicePostgreImpl postgre;
+    private BookServiceImpl bookService;
 
     @Autowired
-    public void setPostgre(BookServicePostgreImpl postgre)
+    public void setBookService(BookServiceImpl bookService)
     {
-        this.postgre = postgre;
+        this.bookService = bookService;
     }
 
     @GetMapping("/BooksList")
@@ -22,7 +22,7 @@ public class BooksListController {
             Model model
     )
     {
-        model.addAttribute("books", postgre.findAll());
+        model.addAttribute("books", bookService.findAll());
         return "BooksList";
     }
 }

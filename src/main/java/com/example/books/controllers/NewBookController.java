@@ -1,7 +1,7 @@
 package com.example.books.controllers;
 
 import com.example.books.entitys.Book;
-import com.example.books.service.BookServicePostgreImpl;
+import com.example.books.service.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class NewBookController {
 
-    private BookServicePostgreImpl postgre;
+    private BookServiceImpl bookService;
 
-    private String tmpName = BookServicePostgreImpl.DEF_BOOK_PARAM;
-    private String tmpYear = BookServicePostgreImpl.DEF_BOOK_PARAM;
-    private String tmpComment = BookServicePostgreImpl.DEF_BOOK_PARAM;
+    private String tmpName = BookServiceImpl.DEF_BOOK_PARAM;
+    private String tmpYear = BookServiceImpl.DEF_BOOK_PARAM;
+    private String tmpComment = BookServiceImpl.DEF_BOOK_PARAM;
 
     @Autowired
-    public void setPostgre(BookServicePostgreImpl postgre)
+    public void setBookService(BookServiceImpl bookService)
     {
-        this.postgre = postgre;
+        this.bookService = bookService;
     }
 
     @GetMapping("/NewBook")
@@ -42,9 +42,9 @@ public class NewBookController {
 
     private void setDefBookParams()
     {
-        tmpName = BookServicePostgreImpl.DEF_BOOK_PARAM;
-        tmpYear = BookServicePostgreImpl.DEF_BOOK_PARAM;
-        tmpComment = BookServicePostgreImpl.DEF_BOOK_PARAM;
+        tmpName = BookServiceImpl.DEF_BOOK_PARAM;
+        tmpYear = BookServiceImpl.DEF_BOOK_PARAM;
+        tmpComment = BookServiceImpl.DEF_BOOK_PARAM;
     }
 
     @PostMapping("/NewBook")
@@ -54,9 +54,9 @@ public class NewBookController {
             @RequestParam(value="comment") String comment
     ) {
         if(
-                (name.equals(BookServicePostgreImpl.DEF_BOOK_PARAM)) ||
-                (year.equals(BookServicePostgreImpl.DEF_BOOK_PARAM)) ||
-                (comment.equals(BookServicePostgreImpl.DEF_BOOK_PARAM))
+                (name.equals(BookServiceImpl.DEF_BOOK_PARAM)) ||
+                (year.equals(BookServiceImpl.DEF_BOOK_PARAM)) ||
+                (comment.equals(BookServiceImpl.DEF_BOOK_PARAM))
         )
         {
             saveErrorBookParams(name, year, comment);
@@ -74,7 +74,7 @@ public class NewBookController {
         }
 
         setDefBookParams();
-        postgre.saveBook(new Book(name, tmpYearInteger, comment));
+        bookService.saveBook(new Book(name, tmpYearInteger, comment));
         return "redirect:/BooksList";
     }
 }

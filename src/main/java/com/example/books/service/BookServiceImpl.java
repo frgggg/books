@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class BookServicePostgreImpl implements BookService {
+public class BookServiceImpl implements BookService {
 
     public static final String DEF_BOOK_PARAM = "";
 
