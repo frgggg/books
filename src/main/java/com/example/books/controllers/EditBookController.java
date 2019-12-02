@@ -31,7 +31,7 @@ public class EditBookController {
         return "redirect:/BooksList";
     }
 
-    @PostMapping(value = "/BooksList/{id}/update")
+    @PostMapping(value = "/BooksList/{id}")
     public String updateBook(
             @PathVariable("id") Integer id,
             @RequestParam(value="name") String name,
@@ -39,15 +39,15 @@ public class EditBookController {
             @RequestParam(value="comment") String comment
     )
     {
+        System.out.println(name);
+        System.out.println(year);
+        System.out.println(comment);
         if(
                 (name.equals(BookControllersUtil.DEF_BOOK_PARAM)) ||
                 (year.equals(BookControllersUtil.DEF_BOOK_PARAM)) ||
                 (comment.equals(BookControllersUtil.DEF_BOOK_PARAM))
         )
         {
-            System.out.println(name);
-            System.out.println(year);
-            System.out.println(comment);
             return "redirect:/BooksList/" + id;
         }
         Integer yearInt;
